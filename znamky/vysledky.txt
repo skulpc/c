@@ -1,0 +1,9 @@
+         Bimboch 1 2 3 4 2.50 prospel
+           Novak 1 2 3 1 1.75 prospel
+           Sahib 1 2 1 1 1.25 prospel s vyznamenanim
+           Cerna 1 1 1 1 1.00 prospel s vyznamenanim
+       Honzikova 1 1 1 3 1.50 prospel
+         Steiner 3 3 3 2 2.75 prospel
+         Kokoska 5 5 5 5 5.00 neporspel
+         Axelova 1 2 3 2 2.00 prospel
+        Kudlanka 1 1 1 5 2.00 neporspel

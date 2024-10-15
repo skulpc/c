@@ -1,0 +1,7 @@
+          Trebic -4 -2 -10 -6.00
+         Nedvezi -6 -5 -7 -6.00
+      Protivanov -5 -5 -6 -5.00
+        Vizovice -2 -1 -2 -1.00
+       Straznice -2 0 -3 -2.00
+        Kromeriz -3 -3 -3 -3.00
+ Brno-Zabovresky -2 -1 -5 -3.00

@@ -1,0 +1,9 @@
+Bimboch   1 2 3 4
+Novak     1 2 3 1
+Sahib     1 2 1 1
+Cerna     1 1 1 1
+Honzikova 1 1 1 3
+Steiner   3 3 3 2
+Kokoska   5 5 5 5
+Axelova   1 2 3 2
+Kudlanka  1 1 1 5

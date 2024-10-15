@@ -1,0 +1,7 @@
+Trebic          -4 -2 -10
+Nedvezi         -6 -5 -7
+Protivanov      -5 -5 -6
+Vizovice        -2 -1 -2
+Straznice       -2 0 -3
+Kromeriz        -3 -3 -3
+Brno-Zabovresky -2 -1 -5

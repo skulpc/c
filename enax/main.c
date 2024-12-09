@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <math.h>
 
+// #define PRINT (a){
+//   #if DEBUG == 1
+    
+// }
+
 double enax(float x, float pr)
 {
   if (x == 0)
@@ -28,7 +33,7 @@ double enax(float x, float pr)
     printf("out:%f\n\n", out);
 
     i++;
-  } while (pr < fabs(Sn - Sp));
+  } while (pr < fabs(Sn - Sp) || fabs(Sn - Sp) == 0);
 
   return out;
 }
@@ -36,8 +41,8 @@ double enax(float x, float pr)
 int main()
 {
   double arr[11] = {1, 2.718282, 7.389056, 20.085537, 54.59815, 148.41316, 403.4288, 1096.6332, 2980.958, 8103.084, 22026.466};
-  for (size_t i = 0; i < 2; i++)
+  for (size_t i = 0; i < 8; i++)
   {
-    printf("\n%3d %f (%f)\n\n\n\n", i, enax((float)i, 0.0001), arr[i]);
+    printf("\n%3d %f (%f)\n\n\n\n", i, enax((float)i, 0.01), arr[i]);
   }
 }

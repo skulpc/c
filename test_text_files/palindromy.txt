@@ -1,0 +1,9 @@
+kajak
+nepotopen
+oko
+jej
+krk
+Anna
+Otto
+Pocet palindromu: 7
+Procent z celkoveho poctu: 41%

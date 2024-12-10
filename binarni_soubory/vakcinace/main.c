@@ -179,6 +179,13 @@ void vakcinace(TNazev filename)
   size_t size = ftell(f);
   fseek(f, 0, SEEK_SET);
 
+  if (size <= sizeof(TOsoba))
+  {
+    printf("soubor je prazdny\n");
+    fclose(f);
+    return;
+  }
+
   while (ftell(f) <= size - sizeof(TOsoba))
   {
     TOsoba read = read_struct(f);

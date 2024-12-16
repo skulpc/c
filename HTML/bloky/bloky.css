@@ -1,0 +1,28 @@
+body {font-family : Tahoma;
+		 	font-size : 10pt}
+
+#zluty {background-color : yellow;
+			 	border : 1px solid black;
+				padding : 20px;
+				margin : 0}
+
+#cerveny {background-color : red;
+			 	border : 1px solid black;
+				padding : 20px;
+				margin : 0}
+
+#modry {background-color : blue;
+			 	border : 1px solid black;
+				padding : 20px;
+				margin : 0}
+				
+#bily {background-color : white;
+			 	border : 1px solid black;
+				padding : 20px;
+				margin : 0}
+				
+#zeleny {background-color : green;
+			 	border : 1px solid black;
+				padding : 20px;
+				margin : 0}												
+	

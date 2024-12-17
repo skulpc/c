@@ -1,29 +1,77 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
-    char jmeno[20];
-    int vek;
-} Osoba;
+// LIFO - last in first out
 
-int main () {
-  Osoba *p_os;
-  
-  p_os = (Osoba *) malloc(sizeof(Osoba));
+typedef struct node
+{
+  char val;
+  struct node *next;
+} Node;
 
-  if (p_os == NULL) {
+typedef struct stack
+{
+  Node *top;
+} Stack;
+
+void init(Stack *stack)
+{
+  stack->top = NULL;
+}
+
+void push(int val, Stack *stack)
+{
+  Node *new_node = (Node *)malloc(sizeof(Node));
+
+  if (new_node == NULL)
+  {
     printf("Nedostatek pameti\n");
-    return 1;
+    return;
   }
 
-  printf("Zadej jmeno: ");
-  scanf("%s", p_os->jmeno);
-  printf("Zadej vek: ");
-  scanf("%d", &p_os->vek);
+  new_node->val = val;
+  new_node->next = stack->top;
+  stack->top = new_node;
+}
 
-  printf("Jmeno: %s, Vek: %d\n", p_os->jmeno, p_os->vek);
+int pop(Stack *stack)
+{
+  if (stack->top == NULL)
+  {
+    return -1;
+  }
+  int val = stack->top->val;
+  stack->top = stack->top->next;
+  return val;
+}
 
-  free(p_os);
-  p_os = NULL;
+void free_stack(Stack *stack)
+{
+  while (stack->top != NULL)
+  {
+    Node *tmp = stack->top;
+    stack->top = stack->top->next;
+    free(tmp);
+  }
+}
 
+int main()
+{
+  Stack stack;
+
+  init(&stack);
+
+  char c;
+  while ((c = getchar()) != '\n')
+  {
+    push(c, &stack);
+  }
+
+  int val;
+  while ((val = pop(&stack)) != -1)
+  {
+    printf("%c\n", val);
+  }
+
+  free_stack(&stack);
 }

@@ -1,22 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// LIFO - last in first out
+// FIFO
 
 typedef struct node
 {
   char val;
   struct node *previous;
+  struct node *next;
 } Node;
 
 typedef struct queue
 {
   Node *back;
+  Node *front;
 } Queue;
 
 void init(Queue *stack)
 {
   stack->back = NULL;
+  stack->front = NULL;
 }
 
 void push(int val, Queue *stack)
@@ -31,19 +34,38 @@ void push(int val, Queue *stack)
 
   new_node->val = val;
   new_node->previous = stack->back;
+  new_node->next = NULL;
+
+  if (stack->back != NULL)
+  {
+    stack->back->next = new_node;
+  }
+  else
+  {
+    stack->front = new_node;
+  }
+
   stack->back = new_node;
 }
 
 int pop(Queue *stack)
 {
-  if (stack->back == NULL)
+  if (stack->front == NULL)
   {
     return -1;
   }
-  int val = stack->back->val;
-  stack->back = stack->back->previous;
+  int val = stack->front->val;
+
+  Node *tmp = stack->front;
+  stack->front = stack->front->next;
+  if (stack->front == NULL)
+    stack->back = NULL;
+  free(tmp);
+
   return val;
 }
+
+// nize az po insert(.) nezmeneno od zasobniku
 
 Node *get_node(Queue *stack, int index)
 {
@@ -107,6 +129,8 @@ void insert(Queue *stack, int index, int val)
   prev->previous = new_node;
 }
 
+// vyse nezmeneno od zasobniku
+
 void free_queue(Queue *stack)
 {
   while (stack->back != NULL)
@@ -119,21 +143,21 @@ void free_queue(Queue *stack)
 
 int main()
 {
-  Queue stack;
+  Queue queue;
 
-  init(&stack);
+  init(&queue);
 
   char c;
   while ((c = getchar()) != '\n')
   {
-    push(c, &stack);
+    push(c, &queue);
   }
 
   int val;
-  while ((val = pop(&stack)) != -1)
+  while ((val = pop(&queue)) != -1)
   {
     printf("%c\n", val);
   }
 
-  free_queue(&stack);
+  free_queue(&queue);
 }

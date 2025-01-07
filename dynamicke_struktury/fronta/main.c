@@ -131,13 +131,22 @@ void insert(Queue *stack, int index, int val)
 
 // vyse nezmeneno od zasobniku
 
-void free_queue(Queue *stack)
+void free_queue(Queue *queue)
 {
-  while (stack->back != NULL)
+  while (queue->back != NULL)
   {
-    Node *tmp = stack->back;
-    stack->back = stack->back->previous;
+    Node *tmp = queue->back;
+    queue->back = queue->back->previous;
     free(tmp);
+  }
+}
+
+void print_queue(Queue *queue)
+{
+  int val;
+  while ((val = pop(queue)) != -1)
+  {
+    printf("%c\n", val);
   }
 }
 
@@ -153,11 +162,7 @@ int main()
     push(c, &queue);
   }
 
-  int val;
-  while ((val = pop(&queue)) != -1)
-  {
-    printf("%c\n", val);
-  }
+  print_queue(&queue);
 
   free_queue(&queue);
 }

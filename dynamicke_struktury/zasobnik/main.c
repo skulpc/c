@@ -52,7 +52,7 @@ Node *get_node(Queue *stack, int index)
   {
     if (tmp == NULL)
     {
-      return -1;
+      return NULL;
     }
     tmp = tmp->previous;
   }
@@ -62,7 +62,7 @@ Node *get_node(Queue *stack, int index)
 int get_val(Queue *stack, int index)
 {
   Node *tmp = get_node(stack, index);
-  if (tmp == -1)
+  if (tmp == NULL)
   {
     return -1;
   }
@@ -72,7 +72,7 @@ int get_val(Queue *stack, int index)
 void set_val(Queue *stack, int index, int val)
 {
   Node *tmp = get_node(stack, index);
-  if (tmp == -1)
+  if (tmp == NULL)
   {
     return;
   }
@@ -98,7 +98,7 @@ void insert(Queue *stack, int index, int val)
   }
 
   Node *prev = get_node(stack, index - 1);
-  if (prev == -1)
+  if (prev == NULL)
   {
     return;
   }

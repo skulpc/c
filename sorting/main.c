@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
@@ -8,26 +9,44 @@ void print_arr_with_wall(int wall, int arr[], int size);
 void selection_sort(int arr[], int size);
 void insert_sort(int arr[], int size);
 int move_one_element(int from, int to, int arr[], int size);
+void shuffle(int arr[], int size);
 
 int main()
 {
   printf("\n");
-  int arr[] = {7, 2, 4, 1, 5, 3, 6};
+  int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
   // int arr[] = {2, 4, 1, 5, 7, 3, 6};
 
   // print_arr(arr, SIZE(arr));
   // move_one_element(SIZE(arr) - 1, 0, arr, SIZE(arr));
   // print_arr(arr, SIZE(arr));
 
-  // selection_sort(arr, SIZE(arr));
-  // print_str_arr("selection sort:\n", arr, SIZE(arr));
+  shuffle(arr, SIZE(arr));
 
+  printf("selection sort:\n");
+  selection_sort(arr, SIZE(arr));
+  print_arr(arr, SIZE(arr));
+
+  shuffle(arr, SIZE(arr));
+
+  printf("insert sort:\n");
   insert_sort(arr, SIZE(arr));
-  print_str_arr("insert sort:\n", arr, SIZE(arr));
+  print_arr(arr, SIZE(arr));
+}
+
+void shuffle(int arr[], int size)
+{
+  for (size_t i = 0; i < size; i++)
+  {
+    int r = rand() % size;
+    move_one_element(i, r, arr, size);
+  }
 }
 
 void selection_sort(int arr[], int size)
 {
+  print_arr(arr, size);
   for (size_t i = 0; i < size - 1; i++)
   {
     int min = i;
@@ -38,15 +57,17 @@ void selection_sort(int arr[], int size)
         min = u;
       }
     }
-    int tmp = arr[i];
-    arr[i] = arr[min];
-    arr[min] = tmp;
+    if (min != i)
+    {
+      move_one_element(min, i, arr, size);
+    }
+    print_arr_with_wall(i + 1, arr, size);
   }
 }
 
 void insert_sort(int arr[], int size)
 {
-  for (size_t i = 1; i < size; i++) //TODO: size - 1?
+  for (size_t i = 1; i < size; i++) // TODO: size - 1?
   {
     print_arr_with_wall(i, arr, size);
     // int selected = arr[i];

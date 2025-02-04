@@ -14,6 +14,7 @@ void selection_sort(int arr[], int size);
 void insert_sort(int arr[], int size);
 void bubble_sort(int arr[], int size);
 void shaker_sort(int arr[], int size);
+void binary_insertion_sort(int arr[], int size);
 
 int move_one_element(int from, int to, int arr[], int size);
 
@@ -50,6 +51,12 @@ int main()
 
   printf("shaker sort:\n");
   shaker_sort(arr, SIZE(arr));
+  print_arr(arr, SIZE(arr));
+
+  shuffle(arr, SIZE(arr));
+
+  printf("binary insertion sort:\n");
+  binary_insertion_sort(arr, SIZE(arr));
   print_arr(arr, SIZE(arr));
 }
 
@@ -187,6 +194,34 @@ void shaker_sort(int arr[], int size)
   }
 }
 
+void binary_insertion_sort(int arr[], int size)
+{
+  for (size_t i = 1; i < size; i++) // TODO: size - 1?
+  {
+    printf("\n");
+    print_arr_with_wall(i, arr, size);
+    // int selected = arr[i];
+    int p = i;
+    int l = 0;
+    while (p != l)
+    {
+      int mid = (l + p) / 2;
+      printf("%d mid\n", mid);
+      if (arr[i] < arr[mid])
+      {
+        p = mid;
+      }
+      else
+      {
+        l = mid + 1;
+      }
+      print_arr_with_char(l, 'L', arr, size);
+      print_arr_with_char(p, 'P', arr, size);
+    }
+    move_one_element(i, l, arr, size);
+  }
+}
+
 int move_one_element(int from, int to, int arr[], int size)
 {
   if (from >= size || from < 0 || to >= size || to < 0)
@@ -247,23 +282,17 @@ void print_str_arr(char *str, int arr[], int size)
 
 void print_arr_with_wall(int wall, int arr[], int size)
 {
-  for (size_t i = 0; i < size; i++)
-  {
-    printf("%d", arr[i]);
-    if (i + 1 == wall)
-    {
-      printf("|");
-    }
-    else
-    {
-      printf(" ");
-    }
-  }
-  printf("\n");
+  print_arr_with_char(wall, '|', arr, size);
 }
 
 void print_arr_with_char(int wall, char c, int arr[], int size)
 {
+  if (wall == 0) {
+    printf("%c", c);
+  }
+  else {
+    printf(" ");
+  }
   for (size_t i = 0; i < size; i++)
   {
     printf("%d", arr[i]);

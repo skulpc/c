@@ -15,13 +15,16 @@ void insert_sort(int arr[], int size);
 void bubble_sort(int arr[], int size);
 void shaker_sort(int arr[], int size);
 void binary_insertion_sort(int arr[], int size);
+void quick_sort(int arr[], int size);
 
+void swap(int arr[], int a, int b);
 int move_one_element(int from, int to, int arr[], int size);
 
 int main()
 {
   printf("\n");
-  int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+#define DSIZE 10
+  int arr[DSIZE];
 
   // int arr[] = {2, 4, 1, 5, 7, 3, 6};
 
@@ -57,6 +60,12 @@ int main()
 
   printf("binary insertion sort:\n");
   binary_insertion_sort(arr, SIZE(arr));
+  print_arr(arr, SIZE(arr));
+
+  shuffle(arr, SIZE(arr));
+
+  printf("quick sort:\n");
+  quick_sort(arr, SIZE(arr));
   print_arr(arr, SIZE(arr));
 }
 
@@ -222,6 +231,64 @@ void binary_insertion_sort(int arr[], int size)
   }
 }
 
+void quick_sort(int arr[], int size)
+{
+  if (size < 2)
+  {
+    print_str_arr("end:", arr, size);
+    return;
+  }
+  else
+  {
+    print_str_arr("start:", arr, size);
+  }
+  // set pivot middle
+  // find first element bigger than pivot on the left
+  // find first element smaller than pivot on the right
+  // swap them
+  // repeat (start searching from the swapped elements)
+  // if i > j recurse
+
+  // int pivot_index = ;
+  int pivot = arr[size / 2];
+  int i = 0;
+  int j = size - 1;
+
+  while (1)
+  {
+    while (arr[i] < pivot && i < size - 1)
+    {
+      i++;
+    }
+    while (arr[j] > pivot && j > 0)
+    {
+      j--;
+    }
+    printf("i:%d, j:%d\n", i, j);
+
+    if (i < j)
+    {
+      swap(arr, i, j);
+      i++;
+      j--;
+    }
+    else
+    {
+      break;
+    }
+  }
+  quick_sort(&arr[size / 2], size - (size / 2));
+  quick_sort(&arr[0], size / 2);
+  return;
+}
+
+void swap(int arr[], int a, int b)
+{
+  int tmp = arr[a];
+  arr[a] = arr[b];
+  arr[b] = tmp;
+}
+
 int move_one_element(int from, int to, int arr[], int size)
 {
   if (from >= size || from < 0 || to >= size || to < 0)
@@ -287,10 +354,12 @@ void print_arr_with_wall(int wall, int arr[], int size)
 
 void print_arr_with_char(int wall, char c, int arr[], int size)
 {
-  if (wall == 0) {
+  if (wall == 0)
+  {
     printf("%c", c);
   }
-  else {
+  else
+  {
     printf(" ");
   }
   for (size_t i = 0; i < size; i++)

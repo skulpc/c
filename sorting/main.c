@@ -16,6 +16,7 @@ void bubble_sort(int arr[], int size);
 void shaker_sort(int arr[], int size);
 void binary_insertion_sort(int arr[], int size);
 void quick_sort(int arr[], int size);
+void heap_sort(int arr[], int size);
 
 void swap(int arr[], int a, int b);
 int move_one_element(int from, int to, int arr[], int size);
@@ -66,6 +67,13 @@ int main()
 
   printf("quick sort:\n");
   quick_sort(arr, SIZE(arr));
+  print_arr(arr, SIZE(arr));
+  printf("quick sort no workey\n");
+
+  shuffle(arr, SIZE(arr));
+
+  printf("heap sort:\n");
+  heap_sort(arr, SIZE(arr));
   print_arr(arr, SIZE(arr));
 }
 
@@ -280,6 +288,69 @@ void quick_sort(int arr[], int size)
   quick_sort(&arr[size / 2], size - (size / 2));
   quick_sort(&arr[0], size / 2);
   return;
+}
+
+void heap_sort(int arr[], int size)
+{
+  // // vyvoření haldy
+  // i0 uz je setrideno
+
+  for (int i = 2; i <= size; i++)
+  {
+    int j = i;
+    int swapped = 0;
+    do
+    {
+      printf("j: %d", j);
+      int ancestor_i = j / 2;
+      if (arr[j] < arr[ancestor_i])
+      {
+        swap(arr, j, ancestor_i);
+        j = ancestor_i;
+        swapped = 1;
+      }
+      else {
+        swapped = 0;
+      }
+
+    } while (swapped && (j > 1));
+  }
+
+  // pokud i1 < predchudce, dam ho na 2*i0
+  // jinak prohodim a predchudce zase hledam kam dat ci tak neco
+
+  // //rozebirani haldy
+  // posledni do korene a zjistuju jak jsou na tom naslednici pokud jsou naslednici mensi, vymnenim s mensim prvkem
+  // zaroven koren na konec arraye, kdeu uz je serazen
+  for (int i = 0; i < size; i++)
+  {
+    swap(arr, 1, size - i);
+
+    int j = 1;
+    int helper = j;
+    int swapped = 0;
+    do
+    {
+      int first_desc_i = j * 2;
+      int second_desc_i = j * 2 + 1;
+      if ((arr[first_desc_i] < arr[j]) && (first_desc_i < size - i))
+      {
+        helper = first_desc_i;
+      }
+      if ((arr[second_desc_i] < arr[first_desc_i]) && (second_desc_i < size - i))
+      {
+        helper = second_desc_i;
+      }
+      if (helper != j)
+      {
+        swap(arr, helper, j);
+        swapped = 1;
+        j = helper;
+      }
+      printf("j: %d\n", j);
+
+    } while (swapped && (j * 2 < size - i));
+  }
 }
 
 void swap(int arr[], int a, int b)

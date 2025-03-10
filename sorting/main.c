@@ -70,11 +70,11 @@ int main()
   print_arr(arr, SIZE(arr));
   printf("quick sort no workey\n");
 
-  shuffle(arr, SIZE(arr));
+  // shuffle(arr, SIZE(arr));
 
-  printf("heap sort:\n");
-  heap_sort(arr, SIZE(arr));
-  print_arr(arr, SIZE(arr));
+  // printf("heap sort:\n");
+  // heap_sort(arr, SIZE(arr));
+  // print_arr(arr, SIZE(arr));
 }
 
 void shuffle(int arr[], int size)
@@ -259,23 +259,25 @@ void quick_sort(int arr[], int size)
 
   // int pivot_index = ;
   int pivot = arr[size / 2];
+  printf("pivot:%d\n", pivot);
   int i = 0;
   int j = size - 1;
 
   while (1)
   {
-    while (arr[i] < pivot && i < size - 1)
+    while (arr[i] < pivot)
     {
       i++;
     }
-    while (arr[j] > pivot && j > 0)
+    while (arr[j] > pivot)
     {
       j--;
     }
     printf("i:%d, j:%d\n", i, j);
 
-    if (i < j)
+    if (i <= j)
     {
+      // printf("swap %d <=> %d\n", arr[i], arr[j]);
       swap(arr, i, j);
       i++;
       j--;
@@ -285,8 +287,15 @@ void quick_sort(int arr[], int size)
       break;
     }
   }
-  quick_sort(&arr[size / 2], size - (size / 2));
-  quick_sort(&arr[0], size / 2);
+  if ((j > 0) || (i < size - 1))
+  {
+    if (j > 0)
+      quick_sort(&arr[0], size / 2);
+    if (i < size - 1)
+      quick_sort(&arr[size / 2], size - (size / 2) + 1);
+  }
+  else
+    print_str_arr("end:", arr, size);
   return;
 }
 
@@ -309,7 +318,8 @@ void heap_sort(int arr[], int size)
         j = ancestor_i;
         swapped = 1;
       }
-      else {
+      else
+      {
         swapped = 0;
       }
 

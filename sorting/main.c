@@ -68,13 +68,12 @@ int main()
   printf("quick sort:\n");
   quick_sort(arr, SIZE(arr));
   print_arr(arr, SIZE(arr));
-  printf("quick sort no workey\n");
 
-  // shuffle(arr, SIZE(arr));
+  shuffle(arr, SIZE(arr));
 
-  // printf("heap sort:\n");
-  // heap_sort(arr, SIZE(arr));
-  // print_arr(arr, SIZE(arr));
+  printf("heap sort:\n");
+  heap_sort(arr, SIZE(arr));
+  print_arr(arr, SIZE(arr));
 }
 
 void shuffle(int arr[], int size)
@@ -301,16 +300,13 @@ void quick_sort(int arr[], int size)
 
 void heap_sort(int arr[], int size)
 {
-  // // vyvoření haldy
-  // i0 uz je setrideno
-
+  // Build the heap
   for (int i = 2; i <= size; i++)
   {
     int j = i;
     int swapped = 0;
     do
     {
-      printf("j: %d", j);
       int ancestor_i = j / 2;
       if (arr[j] < arr[ancestor_i])
       {
@@ -322,16 +318,10 @@ void heap_sort(int arr[], int size)
       {
         swapped = 0;
       }
-
     } while (swapped && (j > 1));
   }
 
-  // pokud i1 < predchudce, dam ho na 2*i0
-  // jinak prohodim a predchudce zase hledam kam dat ci tak neco
-
-  // //rozebirani haldy
-  // posledni do korene a zjistuju jak jsou na tom naslednici pokud jsou naslednici mensi, vymnenim s mensim prvkem
-  // zaroven koren na konec arraye, kdeu uz je serazen
+  // Extract elements from the heap
   for (int i = 0; i < size; i++)
   {
     swap(arr, 1, size - i);
@@ -343,11 +333,11 @@ void heap_sort(int arr[], int size)
     {
       int first_desc_i = j * 2;
       int second_desc_i = j * 2 + 1;
-      if ((arr[first_desc_i] < arr[j]) && (first_desc_i < size - i))
+      if ((first_desc_i < size - i) && (arr[first_desc_i] < arr[j]))
       {
         helper = first_desc_i;
       }
-      if ((arr[second_desc_i] < arr[first_desc_i]) && (second_desc_i < size - i))
+      if ((second_desc_i < size - i) && (arr[second_desc_i] < arr[helper]))
       {
         helper = second_desc_i;
       }
@@ -357,8 +347,10 @@ void heap_sort(int arr[], int size)
         swapped = 1;
         j = helper;
       }
-      printf("j: %d\n", j);
-
+      else
+      {
+        swapped = 0;
+      }
     } while (swapped && (j * 2 < size - i));
   }
 }

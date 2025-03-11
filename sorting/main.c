@@ -290,9 +290,9 @@ void quick_sort(int arr[], int size)
   if ((j > 0) || (i < size - 1))
   {
     if (j > 0)
-      quick_sort(&arr[0], j);
+      quick_sort(arr, j + 1);
     if (i < size - 1)
-      quick_sort(&arr[j + 1], size - j - 1);
+      quick_sort(&arr[i], size - i);
   }
   else
     print_str_arr("end:", arr, size);

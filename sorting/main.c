@@ -277,7 +277,7 @@ void quick_sort(int arr[], int size)
 
     if (i <= j)
     {
-      // printf("swap %d <=> %d\n", arr[i], arr[j]);
+      printf("swap %d <=> %d\n", arr[i], arr[j]);
       swap(arr, i, j);
       i++;
       j--;
@@ -290,9 +290,9 @@ void quick_sort(int arr[], int size)
   if ((j > 0) || (i < size - 1))
   {
     if (j > 0)
-      quick_sort(&arr[0], size / 2);
+      quick_sort(&arr[0], j);
     if (i < size - 1)
-      quick_sort(&arr[size / 2], size - (size / 2) + 1);
+      quick_sort(&arr[j + 1], size - j - 1);
   }
   else
     print_str_arr("end:", arr, size);

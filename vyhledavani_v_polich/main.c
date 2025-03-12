@@ -75,13 +75,45 @@ int removesorted(int n, int arr[], int size)
       l_i = m + 1;
     }
   }
-  move_one_element(l_i, size + 1, arr, MAX_SIZE);
-
-  //if there are same around, delete them too
-
-  removedcount++;
+  while (arr[l_i] == n)
+  {
+    move_one_element(l_i, size - 1, arr, MAX_SIZE);
+    size--;
+    removedcount++;
+  }
+  r_i = l_i;
+  while (arr[r_i] == n)
+  {
+    move_one_element(r_i, size - 1, arr, MAX_SIZE);
+    size--;
+    r_i--;
+    removedcount++;
+  }
 
   return removedcount;
+}
+
+findsorted(int n, int arr[], int size)
+{
+  int l_i = 0;
+  int r_i = size;
+  while (l_i != r_i)
+  {
+    int m = (l_i + r_i) / 2;
+    if (arr[m] >= n)
+    {
+      r_i = m;
+    }
+    else
+    {
+      l_i = m + 1;
+    }
+  }
+  if (arr[l_i] == n)
+  {
+    return l_i;
+  }
+  return -1;
 }
 
 void print_arr(int arr[], int size)
@@ -109,32 +141,48 @@ int main()
 
   print_arr(unsorted, unsorted_size);
   printf("find 7 %d\n", findunsorted(7, unsorted, unsorted_size));
-  
+
   int sorted[MAX_SIZE];
   int sorted_size = 0;
-  
+
   for (size_t i = 1; i < 10; i++)
   {
-    addsorted(i*2, sorted, sorted_size++);
+    addsorted(i * 2, sorted, sorted_size++);
     printf("sorted:");
     print_arr(sorted, sorted_size);
     printf("\n");
   }
   addsorted(7, sorted, sorted_size++);
   addsorted(7, sorted, sorted_size++);
+  addsorted(7, sorted, sorted_size++);
   addsorted(9, sorted, sorted_size++);
+  addsorted(0, sorted, sorted_size++);
+  addsorted(0, sorted, sorted_size++);
+  addsorted(0, sorted, sorted_size++);
+  addsorted(0, sorted, sorted_size++);
   addsorted(0, sorted, sorted_size++);
   addsorted(43, sorted, sorted_size++);
   addsorted(44, sorted, sorted_size++);
   print_arr(sorted, sorted_size);
-
+  
+  printf("find 7 %d\n", findsorted(7, sorted, sorted_size));
+  printf("\n");
   for (size_t i = 0; i < 10; i++)
   {
     sorted_size -= removesorted(i * 2, sorted, sorted_size);
   }
+  
+  print_arr(sorted, sorted_size);
+  printf("find 7 %d\n", findsorted(7, sorted, sorted_size));
+  printf("\n");
+  sorted_size -= removesorted(7, sorted, sorted_size);
+  print_arr(sorted, sorted_size);
+  printf("\n");
+  sorted_size -= removesorted(12, sorted, sorted_size);
+  print_arr(sorted, sorted_size);
+  printf("\n");
 
-  // print_arr(sorted, sorted_size);
-  // printf("find 7 %d", findsorted(7, sorted, sorted_size));
+  printf("find 7 %d", findsorted(7, sorted, sorted_size));
 }
 
 int move_one_element(int from, int to, int arr[], int size)

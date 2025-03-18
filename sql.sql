@@ -1,3 +1,6 @@
+# https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-mysql-client2
+# ^great extension
+
 CREATE TABLE ctenari
 (
   idc int PRIMARY KEY,
@@ -52,3 +55,53 @@ select nazev from knihy where (autor = 'capek');
 select * from knihy where (dat_porizeni > '2010-01-01');
 select jmeno, prijmeni from ctenari where (adresa = 'brno') and (dat_narozeni > '1990-01-01');
 select * from knihy where rok_vydani between 1975 and 1995;
+select prijmeni, jmeno, adresa from ctenari where adresa in ('Brno', 'Kurim');
+select * from ctenari where prijmeni like 'H%';
+select distinct jmeno from ctenari;
+select jmeno, prijmeni from ctenari where adresa = 'brno';
+select jmeno, prijmeni from ctenari where adresa in ('brno');
+select distinct nazev, autor from knihy where autor in ('Hrabal', 'Viewegh');
+select nazev, rok_vydani from knihy where rok_vydani between 1980 and 2010;
+
+#as
+select idk as signaturam, autor, nazev, dat_porizeni as 'from' from knihy;
+
+# order by
+select * from knihy order by autor, nazev;
+select * from knihy order by dat_porizeni, rok_vydani;
+select * from knihy order by rok_vydani, dat_porizeni;
+select * from knihy order by rok_vydani desc, dat_porizeni desc;
+
+select jmeno, prijmeni, dat_narozeni from ctenari where dat_narozeni > '1980-01-01' ORDER BY prijmeni;
+
+# min, max, count, avg, sum
+
+select count(*) as 'pocet registrovasnych ctenaru' from ctenari;
+select count(idk), autor from knihy where autor = 'Capek';
+# only counts not null
+select count(autor), autor from knihy where autor = 'Capek'; 
+select min(dat_porizeni) as nejstarsi_kniha from knihy;
+
+# group by (plati pro funkce)
+select count(*), adresa from ctenari GROUP BY adresa;
+select autor, count(*) as pocet_knih from knihy group by autor;
+select min(dat_narozeni) as nejstarsi_datum_narozeni from ctenari;
+select * from ctenari;
+
+# eqiuivalent
+select autor, count(*) as pocet_knih from knihy group by autor having pocet_knih > 1;
+select autor, count(*) as pocet_knih from knihy group by autor having count(*) > 1;
+
+# join 
+select distinct jmeno, prijmeni from vypujcky join ctenari on ctenari.idc = vypujcky.idc;
+select distinct jmeno, prijmeni, nazev, autor from vypujcky join ctenari on ctenari.idc = vypujcky.idc join knihy on knihy.idk = vypujcky.idk;
+select count(*) jmeno, prijmeni, nazev, autor from vypujcky join ctenari on ctenari.idc = vypujcky.idc join knihy on knihy.idk = vypujcky.idk group by vypujcky.idc;
+
+
+update ctenari set adresa="blansko" where prijmeni="Mala";
+SELECT * from ctenari;
+
+delete from ctenari where prijmeni="Horak";
+
+delete from vypujcky where idc = (select idc from ctenari where prijmeni="Mala");
+select * from vypujcky;

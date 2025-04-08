@@ -34,6 +34,50 @@ int pop(List *stack)
     return val;
 }
 
+int remove_el(List *list, char val)
+{
+    int removed_count = 0;
+    Node *last = NULL;
+
+    // go through the list
+    for (Node *node = list->back; node != NULL;)
+    {
+        // printf("a");
+        if (node->val == val)
+        {
+            Node *to_free = node;
+            if (node->next == NULL)
+            {
+                // printf("end");
+                // end
+                last->next = NULL;
+            }
+            else if (last == NULL)
+            {
+                // printf("start");
+                // start
+                list->back = node->next;
+            }
+            else
+            {
+                // printf("mid");
+                // middle
+                last->next = node->next;
+            }
+            node = node->next;
+            free(to_free);
+            removed_count++;
+        }
+        else
+        {
+            // printf("not eq");
+            last = node;
+            node = node->next;
+        }
+    }
+    return removed_count;
+}
+
 void add_to_sorted(List *list, int val)
 {
     Node *new_node = (Node *)malloc(sizeof(Node));
@@ -96,6 +140,13 @@ void print_queue(List *queue)
         printf("%c\n", val);
     }
 }
+void print_queue_nodel(List *list)
+{
+    for (Node *node = list->back; node != NULL;node=node->next) {
+        printf("%c ", node->val);
+    }
+    printf("\n");
+}
 
 int main()
 {
@@ -108,10 +159,24 @@ int main()
     {
         add_to_sorted(&list, c);
     }
-
+    // print_queue(&list);
+    
+    printf("(%d)\n", remove_el(&list, '7'));
+    print_queue_nodel(&list);
+    add_to_sorted(&list, '7');
+    print_queue_nodel(&list);
+    printf("(%d)\n", remove_el(&list, '1'));    
+    print_queue_nodel(&list);
+    add_to_sorted(&list, '1');
+    print_queue_nodel(&list);
+    printf("(%d)\n", remove_el(&list, '2'));
+    print_queue_nodel(&list);
+    add_to_sorted(&list, '2');
+    print_queue_nodel(&list);
+    
     print_queue(&list);
 
-    //remove thingies
+    // remove thingies
 
     free_queue(&list);
 }

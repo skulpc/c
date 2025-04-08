@@ -16,7 +16,7 @@ void bubble_sort(int arr[], int size);
 void shaker_sort(int arr[], int size);
 void binary_insertion_sort(int arr[], int size);
 void quick_sort(int arr[], int size);
-void heap_sort(int arr[], int size);
+// void heap_sort(int arr[], int size);
 
 void swap(int arr[], int a, int b);
 int move_one_element(int from, int to, int arr[], int size);
@@ -69,11 +69,11 @@ int main()
   quick_sort(arr, SIZE(arr));
   print_arr(arr, SIZE(arr));
 
-  shuffle(arr, SIZE(arr));
+  // shuffle(arr, SIZE(arr));
 
-  printf("heap sort:\n");
-  heap_sort(arr, SIZE(arr));
-  print_arr(arr, SIZE(arr));
+  // printf("heap sort:\n");
+  // heap_sort(arr, SIZE(arr));
+  // print_arr(arr, SIZE(arr));
 }
 
 void shuffle(int arr[], int size)
@@ -298,62 +298,62 @@ void quick_sort(int arr[], int size)
   return;
 }
 
-void heap_sort(int arr[], int size)
-{
-  // Build the heap
-  for (int i = 2; i <= size; i++)
-  {
-    int j = i;
-    int swapped = 0;
-    do
-    {
-      int ancestor_i = j / 2;
-      if (arr[j] < arr[ancestor_i])
-      {
-        swap(arr, j, ancestor_i);
-        j = ancestor_i;
-        swapped = 1;
-      }
-      else
-      {
-        swapped = 0;
-      }
-    } while (swapped && (j > 1));
-  }
+// void heap_sort(int arr[], int size)
+// {
+//   // Build the heap
+//   for (int i = 2; i <= size; i++)
+//   {
+//     int j = i;
+//     int swapped = 0;
+//     do
+//     {
+//       int ancestor_i = j / 2;
+//       if (arr[j] < arr[ancestor_i])
+//       {
+//         swap(arr, j, ancestor_i);
+//         j = ancestor_i;
+//         swapped = 1;
+//       }
+//       else
+//       {
+//         swapped = 0;
+//       }
+//     } while (swapped && (j > 1));
+//   }
 
-  // Extract elements from the heap
-  for (int i = 0; i < size; i++)
-  {
-    swap(arr, 1, size - i);
+//   // Extract elements from the heap
+//   for (int i = 0; i < size; i++)
+//   {
+//     swap(arr, 1, size - i);
 
-    int j = 1;
-    int helper = j;
-    int swapped = 0;
-    do
-    {
-      int first_desc_i = j * 2;
-      int second_desc_i = j * 2 + 1;
-      if ((first_desc_i < size - i) && (arr[first_desc_i] < arr[j]))
-      {
-        helper = first_desc_i;
-      }
-      if ((second_desc_i < size - i) && (arr[second_desc_i] < arr[helper]))
-      {
-        helper = second_desc_i;
-      }
-      if (helper != j)
-      {
-        swap(arr, helper, j);
-        swapped = 1;
-        j = helper;
-      }
-      else
-      {
-        swapped = 0;
-      }
-    } while (swapped && (j * 2 < size - i));
-  }
-}
+//     int j = 1;
+//     int helper = j;
+//     int swapped = 0;
+//     do
+//     {
+//       int first_desc_i = j * 2;
+//       int second_desc_i = j * 2 + 1;
+//       if ((first_desc_i < size - i) && (arr[first_desc_i] < arr[j]))
+//       {
+//         helper = first_desc_i;
+//       }
+//       if ((second_desc_i < size - i) && (arr[second_desc_i] < arr[helper]))
+//       {
+//         helper = second_desc_i;
+//       }
+//       if (helper != j)
+//       {
+//         swap(arr, helper, j);
+//         swapped = 1;
+//         j = helper;
+//       }
+//       else
+//       {
+//         swapped = 0;
+//       }
+//     } while (swapped && (j * 2 < size - i));
+//   }
+// }
 
 void swap(int arr[], int a, int b)
 {

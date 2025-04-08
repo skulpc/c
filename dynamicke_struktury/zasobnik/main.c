@@ -9,17 +9,17 @@ typedef struct node
   struct node *previous;
 } Node;
 
-typedef struct queue
+typedef struct list
 {
   Node *back;
-} Queue;
+} List;
 
-void init(Queue *stack)
+void init(List *stack)
 {
   stack->back = NULL;
 }
 
-void push(int val, Queue *stack)
+void push(int val, List *stack)
 {
   Node *new_node = (Node *)malloc(sizeof(Node));
 
@@ -34,7 +34,7 @@ void push(int val, Queue *stack)
   stack->back = new_node;
 }
 
-int pop(Queue *stack)
+int pop(List *stack)
 {
   if (stack->back == NULL)
   {
@@ -45,7 +45,7 @@ int pop(Queue *stack)
   return val;
 }
 
-Node *get_node(Queue *stack, int index)
+Node *get_node(List *stack, int index)
 {
   Node *tmp = stack->back;
   for (int i = 0; i < index; i++)
@@ -59,7 +59,7 @@ Node *get_node(Queue *stack, int index)
   return tmp;
 }
 
-int get_val(Queue *stack, int index)
+int get_val(List *stack, int index)
 {
   Node *tmp = get_node(stack, index);
   if (tmp == NULL)
@@ -69,7 +69,7 @@ int get_val(Queue *stack, int index)
   return tmp->val;
 }
 
-void set_val(Queue *stack, int index, int val)
+void set_val(List *stack, int index, int val)
 {
   Node *tmp = get_node(stack, index);
   if (tmp == NULL)
@@ -79,7 +79,7 @@ void set_val(Queue *stack, int index, int val)
   tmp->val = val;
 }
 
-void insert(Queue *stack, int index, int val)
+void insert(List *stack, int index, int val)
 {
   Node *new_node = (Node *)malloc(sizeof(Node));
   if (new_node == NULL)
@@ -107,7 +107,7 @@ void insert(Queue *stack, int index, int val)
   prev->previous = new_node;
 }
 
-void free_queue(Queue *stack)
+void free_queue(List *stack)
 {
   while (stack->back != NULL)
   {
@@ -119,7 +119,7 @@ void free_queue(Queue *stack)
 
 int main()
 {
-  Queue stack;
+  List stack;
 
   init(&stack);
 

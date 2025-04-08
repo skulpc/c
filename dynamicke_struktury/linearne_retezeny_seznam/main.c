@@ -6,201 +6,89 @@
 typedef struct node
 {
     char val;
-    struct node *previous;
     struct node *next;
 } Node;
 
-typedef struct queue
+typedef struct list
 {
     Node *back;
-    Node *front;
-} Queue;
+} List;
 
-void init(Queue *stack)
+void init(List *list)
 {
-    stack->back = NULL;
-    stack->front = NULL;
+    list->back = NULL;
 }
 
-void push(int val, Queue *stack)
+int pop(List *stack)
 {
-    Node *new_node = (Node *)malloc(sizeof(Node));
-
-    if (new_node == NULL)
-    {
-        printf("Nedostatek pameti\n");
-        return;
-    }
-
-    new_node->val = val;
-    new_node->previous = stack->back;
-    new_node->next = NULL;
-
-    if (stack->back != NULL)
-    {
-        stack->back->next = new_node;
-    }
-    else
-    {
-        stack->front = new_node;
-    }
-
-    stack->back = new_node;
-}
-
-int pop(Queue *stack)
-{
-    if (stack->front == NULL)
+    if (stack->back == NULL)
     {
         return -1;
     }
-    int val = stack->front->val;
+    int val = stack->back->val;
 
-    Node *tmp = stack->front;
-    stack->front = stack->front->next;
-    if (stack->front == NULL)
-        stack->back = NULL;
+    Node *tmp = stack->back;
+    stack->back = stack->back->next;
     free(tmp);
 
     return val;
 }
 
-// nize az po insert(.) nezmeneno od zasobniku
-
-Node *get_node(Queue *stack, int index)
-{
-    Node *tmp = stack->back;
-    for (int i = 0; i < index; i++)
-    {
-        if (tmp == NULL)
-        {
-            return NULL;
-        }
-        tmp = tmp->previous;
-    }
-    return tmp;
-}
-
-int get_val(Queue *stack, int index)
-{
-    Node *tmp = get_node(stack, index);
-    if (tmp == NULL)
-    {
-        return -1;
-    }
-    return tmp->val;
-}
-
-void set_val(Queue *stack, int index, int val)
-{
-    Node *tmp = get_node(stack, index);
-    if (tmp == NULL)
-    {
-        return;
-    }
-    tmp->val = val;
-}
-
-void insert(Queue *queue, int index, int val)
+void add_to_sorted(List *list, int val)
 {
     Node *new_node = (Node *)malloc(sizeof(Node));
-    if (new_node == NULL)
-    {
-        printf("Nedostatek pameti\n");
-        return;
-    }
-
     new_node->val = val;
+    new_node->next = NULL;
 
-    if (index == 0)
+    if (list->back == NULL)
     {
-        queue->back->next = new_node;
-        new_node->previous = queue->back;
-        new_node->next = NULL;
-        queue->back = new_node;
+        list->back = new_node;
         return;
     }
 
-    Node *prev = get_node(queue, index - 1);
-    if (prev == NULL)
-    {
-        return;
-    }
-    new_node->previous = prev->previous;
-    new_node->next = prev;
-    prev->previous = new_node;
-    if (new_node->previous != NULL)
-    {
-        new_node->previous->next = new_node;
-    }
-}
+    Node *prev = NULL;
+    Node *next = list->back;
 
-void insert_sorted(Queue *queue, int val)
-{
-    Node *new_node = (Node *)malloc(sizeof(Node));
-    if (new_node == NULL)
+    while (1)
     {
-        printf("Nedostatek pameti\n");
-        return;
-    }
-    new_node->val = val;
-
-    if (queue->back == NULL) // add to empty queue
-    {
-        queue->back = new_node;
-        queue->back = new_node;
-        new_node->next = NULL;
-        new_node->previous = NULL;
-        return;
-    }
-
-    Node *p1 = queue->back, *p2 = NULL;
-
-    while (p1->previous != NULL)
-    {
-        p2 = p1->previous;
-
-        if () // add to the back
+        if (next->val >= new_node->val)
         {
-            p1->next = new_node;
-            new_node->previous = queue->back;
-            new_node->next = NULL;
-            queue->back = new_node;
-            return;
-        }
+            if (next == list->back)
+            {
+                new_node->next = list->back;
+                list->back = new_node;
+                break;
+            }
 
-        if (p1->val < val && p2->val <= val)
+            prev->next = new_node;
+            new_node->next = next;
+            break;
+        }
+        if (next->next == NULL)
         {
-            p1->previous = new_node;
-            new_node->next = p1;
-            p2->next = new_node;
-            new_node->previous = p2;
-            return;
+            next->next = new_node;
+            break;
         }
-
-        p1 = p2;
+        prev = next;
+        next = next->next;
     }
-        //add to the front
-        queue->front = new_node;
-        p1->previous = new_node;
-        new_node->next = p1;
-        new_node->previous = NULL;
-    
+
+    return;
 }
 
 // vyse nezmeneno od zasobniku
 
-void free_queue(Queue *queue)
+void free_queue(List *queue)
 {
     while (queue->back != NULL)
     {
         Node *tmp = queue->back;
-        queue->back = queue->back->previous;
+        queue->back = queue->back->next;
         free(tmp);
     }
 }
 
-void print_queue(Queue *queue)
+void print_queue(List *queue)
 {
     int val;
     while ((val = pop(queue)) != -1)
@@ -211,19 +99,19 @@ void print_queue(Queue *queue)
 
 int main()
 {
-    Queue queue;
+    List list;
 
-    init(&queue);
+    init(&list);
 
     char c;
     while ((c = getchar()) != '\n')
     {
-        insert_sorted(&queue, c);
+        add_to_sorted(&list, c);
     }
 
-    print_queue(&queue);
+    print_queue(&list);
 
     //remove thingies
 
-    free_queue(&queue);
+    free_queue(&list);
 }
